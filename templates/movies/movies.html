@@ -25,7 +25,8 @@
 <body>
 
     <div id="page" class="page"><!-- mian-content -->
-        <div class="main-banner bg bg1" id="home" style="background-color: rgba(0, 0, 0, 0); margin-top: 0px; background-image: url(&quot;bundles/single-post-pic.jpg&quot;);">
+        <div class="main-banner bg bg1" id="home"
+         style="background-color: rgba(0, 0, 0, 0); margin-top: 0px; background-image: url({% static 'single-post-pic.jpg' %});">
             <!-- header -->
             <header class="header">
                 <div class="container-fluid px-lg-5">
@@ -73,7 +74,7 @@
         <!---->
         <ol class="breadcrumb editContent">
             <li class="breadcrumb-item">
-                <a href="index.html" class="editContent">Home</a>
+                <a href="{% url 'home' %}" class="editContent">Home</a>
             </li>
             <li class="breadcrumb-item active editContent">Single Page</li>
         </ol>
@@ -207,7 +208,7 @@
                             <h3 class="sear-head editContent">Последние добавленные</h3>
                             <div class="special-sec1 row mt-3 editContent">
                                 <div class="img-deals col-md-4">
-                                    <img src="bundles/images/s4.jpg" class="img-fluid" alt="">
+                                    <img src="{% static 'images/s4.jpg' %}" class="img-fluid" alt="">
                                 </div>
                                 <div class="img-deal1 col-md-4">
                                     <h3 class="editContent">Рэмбо: Последняя кровь</h3>
@@ -217,7 +218,7 @@
                             </div>
                             <div class="special-sec1 row mt-3 editContent" >
                                 <div class="img-deals col-md-4">
-                                    <img src="bundles/images/s2.jpg" class="img-fluid" alt="" >
+                                    <img src="{% static 'images/s2.jpg' %}" class="img-fluid" alt="" >
                                 </div>
                                 <div class="img-deal1 col-md-8">
                                     <h3 class="editContent" >Холодное сердце 2</h3>
@@ -227,7 +228,7 @@
                             </div>
                             <div class="special-sec1 row mt-3 editContent" >
                                 <div class="img-deals col-md-4">
-                                    <img src="bundles/images/s1.jpg" class="img-fluid" alt="" >
+                                    <img src="{% static 'images/s1.jpg' %}" class="img-fluid" alt="" >
                                 </div>
                                 <div class="img-deal1 col-md-8">
                                     <h3 class="editContent" >К звездам</h3>
@@ -237,7 +238,7 @@
                             </div>
                             <div class="special-sec1 row mt-3 editContent" >
                                 <div class="img-deals col-md-4">
-                                    <img src="bundles/images/s5.jpg" class="img-fluid" alt="" >
+                                    <img src="{% static '/images/s5.jpg' %}" class="img-fluid" alt="" >
                                 </div>
                                 <div class="img-deal1 col-md-8">
                                     <h3 class="editContent" >Терминатор: Темные судьбы</h3>
@@ -247,7 +248,7 @@
                             </div>
                             <div class="special-sec1 row mt-3 editContent" >
                                 <div class="img-deals col-md-4">
-                                    <img src="bundles/images/s3.jpg" class="img-fluid" alt="" >
+                                    <img src="{% static 'images/s3.jpg' %}" class="img-fluid" alt="" >
                                 </div>
                                 <div class="img-deal1 col-md-8">
                                     <h3 class="editContent" >Джокер</h3>
@@ -263,7 +264,7 @@
                     <!-- product right -->
                     <div class="left-ads-display col-lg-9">
                         <div class="row">
-                            {% for movie in movies %}
+                            {% for movie in movie_list %}
                             <div class="col-md-4 product-men">
                                 <div class="product-shoe-info editContent text-center mt-lg-4" >
                                     <div class="men-thumb-item">
@@ -271,7 +272,7 @@
                                     </div>
                                     <div class="item-info-product">
                                         <h4 class="">
-                                            <a href="moviesingle.html" class="editContent" >
+                                            <a href="{{ movie.get_absolute_url }}" class="editContent" >
                                                 {{ movie.title }}
                                             </a>
                                         </h4>
@@ -308,7 +309,7 @@
                 <div class="row footer-top">
                     <div class="col-lg-4 footer-grid_section_w3layouts">
                         <h2 class="logo-2 mb-lg-4 mb-3">
-                            <a href="index.html" class="editContent">
+                            <a href="{% url 'home' %}" class="editContent">
                                 <span class="fa" aria-hidden="true" >
                                     Django School
                                 </span>
@@ -359,7 +360,7 @@
                                 <h3 class="footer-title text-uppercase editContent mb-lg-4 mb-3" >Разделы</h3>
                                 <ul class="list-unstyled w3layouts-icons">
                                     <li>
-                                        <a href="index.html" class="editContent" >Главная</a>
+                                        <a href="{% url 'home' %}" class="editContent" >Главная</a>
                                     </li>
                                     <li>
                                         <a href="about.html" class="editContent" >Категории</a>
@@ -423,7 +424,7 @@
                         <a href="https://djangochannel.com"> DJANGO SCHOOL.</a>
                     </p>
                     <!-- move top icon -->
-                    <a href="#home" class="move-top text-right col-md-2"><span class="fa fa-long-arrow-up" aria-hidden="true" ></span></a>
+                    <a href="{% url 'home' %}" class="move-top text-right col-md-2"><span class="fa fa-long-arrow-up" aria-hidden="true" ></span></a>
                     <!-- //move top icon -->
                 </div>
             </div>

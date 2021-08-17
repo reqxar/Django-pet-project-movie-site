@@ -1,9 +1,14 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from .models import Movie
 
-class MovieView(View):
+class MovieView(ListView):
+    model = Movie
+    queryset = Movie.objects.filter(draft=False)
+    template_name = 'movies/movies.html'
 
-    def get(self, request):
-        movies = Movie.objects.all()
-        return render(request, 'movies/movies.html', {'movies': movies})
+class MovieDetailView(DetailView):
+    model = Movie
+    slug_field = 'url'
