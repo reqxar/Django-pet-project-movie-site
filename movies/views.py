@@ -1,8 +1,10 @@
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.views.generic.base import View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from .models import Movie
+from .forms import ReviewForm
 
 class MovieView(ListView):
     model = Movie
@@ -12,3 +14,15 @@ class MovieView(ListView):
 class MovieDetailView(DetailView):
     model = Movie
     slug_field = 'url'
+
+class AddReview(View):
+    
+    def post(self, request, pk):
+        form = ReviewForm(request.POST)
+        movie = Movie.objects.get(id=pk)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.movie = movie
+            form.save()
+
+        return redirect(movie.get_absolute_url())

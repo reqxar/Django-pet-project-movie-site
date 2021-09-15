@@ -58,6 +58,7 @@ class Movie(models.Model):
     feels_in_world = models.PositiveIntegerField('Сборы в мире', default=0, help_text='Указать сумму в долларах')
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL, null=True)
     url = models.SlugField(max_length=160, unique=True)
+    movieshots = models.ForeignKey("MovieShoots", verbose_name='Кадры из фильма', on_delete=models.DO_NOTHING, null=True, related_name='+')
     draft = models.BooleanField('Черновик', default=False)
 
     def __str__(self) -> str:
