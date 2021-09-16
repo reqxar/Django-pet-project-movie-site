@@ -1,9 +1,10 @@
+from django.db import models
 from django.db.models.query import QuerySet
 from django.shortcuts import redirect, render
 from django.views.generic.base import View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from .models import Category, Movie
+from .models import Category, Movie, Persons
 from .forms import ReviewForm
 
 class MovieView(ListView):
@@ -28,3 +29,8 @@ class AddReview(View):
             form.save()
 
         return redirect(movie.get_absolute_url())
+
+class ActorView(DetailView):
+    model = Persons
+    template_name = 'movies/actor.html'
+    slug_field = 'name'
