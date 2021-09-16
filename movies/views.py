@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.views.generic.base import View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from .models import Movie
+from .models import Category, Movie
 from .forms import ReviewForm
 
 class MovieView(ListView):
