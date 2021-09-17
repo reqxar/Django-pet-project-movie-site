@@ -7,6 +7,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from .models import Movie, Persons, Genre
 from .forms import ReviewForm
+from django.http import JsonResponse
 
 class GenreYear:
     def get_genres(self):
@@ -51,3 +52,17 @@ class FilterMoviesView(GenreYear, ListView):
             Q(genres__in=self.request.GET.getlist('genre'))
             )
         return queryset
+
+class JsonFilterMoviesView(ListView):
+    template_name = 'movies/movies.html'
+    
+    def get_queryset(self):
+        queryset = Movie.objects.filter(
+            Q(year__in=self.request.GET.getlist("year")) |
+            Q(genres__in=self.request.GET.getlist("genre"))
+        ).distinct().values("title", "tagline", "url", "poster")
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        queryset = list(self.get_queryset())
+        return JsonResponse({"movies": queryset}, safe=False)
