@@ -7,7 +7,18 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from .models import Movie, Persons, Genre, Rating
 from .forms import RatingForm, ReviewForm, RatingStar
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, request
+
+
+
+def get_client_ip(request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        print(ip)
+        return ip
 
 class GenreYear:
     def get_genres(self):
@@ -24,10 +35,19 @@ class MovieView(GenreYear, ListView):
 class MovieDetailView(GenreYear, DetailView):
     model = Movie
     slug_field = 'url'
+   
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['star_form'] = RatingForm()
+        request = self.request
+        prev = Rating.objects.filter(
+            ip=get_client_ip(request),
+            movie_id=Movie.objects.get(title=context['movie']).id
+            )
+        if prev.exists():
+            context['prev'] = prev[0].star_id
+
         return context
 
 class AddReview(View):
@@ -74,19 +94,12 @@ class JsonFilterMoviesView(ListView):
 
 class AddStarRating(View):
     """Добавление рейтинга фильму"""
-    def get_client_ip(self, request):
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip
 
     def post(self, request):
         form = RatingForm(request.POST)
         if form.is_valid():
             Rating.objects.update_or_create(
-                ip=self.get_client_ip(request),
+                ip=get_client_ip(request),
                 movie_id=int(request.POST.get("movie")),
                 defaults={'star_id': int(request.POST.get("star"))}
             )
