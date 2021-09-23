@@ -42,6 +42,7 @@ class MovieDetailView(GenreYear, DetailView):
         context = super().get_context_data(**kwargs)
         context['star_form'] = RatingForm()
         request = self.request
+        context['form'] = ReviewForm()
         prev = Rating.objects.filter(
             ip=get_client_ip(request),
             movie_id=Movie.objects.get(title=context['movie']).id

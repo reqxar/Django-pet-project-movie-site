@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'movies.apps.MoviesConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'snowpenguin.django.recaptcha3',
 ]
 
 MIDDLEWARE = [
@@ -202,4 +203,9 @@ CKEDITOR_CONFIGS = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+RECAPTCHA_PUBLIC_KEY = '6Leul4ccAAAAAIAy3Kutx2ASwN1x_iAo7mCVdHqe'
+RECAPTCHA_PRIVATE_KEY = '6Leul4ccAAAAAJO2sr4rHTk6uuonkjUJJ3gs8AIE'
+RECAPTCHA_DEFAULT_ACTION = 'generic'
+RECAPTCHA_SCORE_THRESHOLD = 0.5
 
