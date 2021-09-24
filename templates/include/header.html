@@ -30,16 +30,16 @@
                 <li>
                     {% if user.is_authenticated %}
                         <span>{{ user.username }}</span>
-                        <a href="#"
+                        <a href="{% url 'account_logout' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
                             Выход
                         </a>
                     {% else %}
-                        <a href="#"
+                        <a href="{% url 'account_login' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
                             Вход
                         </a>
-                         <a href="#"
+                         <a href="{% url 'account_signup' %}"
                            style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">
                             Регистрация
                         </a>
